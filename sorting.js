@@ -84,31 +84,67 @@
 
 // Quick Sort ---- not in place
 
-function QuickSort(array) {
-  //base case: 분할할 어레이의 n <= 1 일때.
-  //combine방법: left array + pivot item + right array
-  let newArr = [];
+// function QuickSort(array) {
+//   //base case: 분할할 어레이의 n <= 1 일때.
+//   //combine방법: left array + pivot item + right array
+//   let newArr = [];
 
-  if (array.length <= 1) newArr = array;
-  if (array.length >= 2) {
-    let leftArr = [];
-    let rightArr = [];
-    let pivot = array[0];
+//   if (array.length <= 1) newArr = array;
+//   if (array.length >= 2) {
+//     let leftArr = [];
+//     let rightArr = [];
+//     let pivot = array[0];
 
-    for (let i = 1; i <= array.length - 1; i++) {
-      if (pivot > array[i]) {
-        leftArr.push(array[i]);
-      } else if (pivot < array[i] || pivot == array[i]) {
-        rightArr.push(array[i]);
-      }
-    }
+//     for (let i = 1; i <= array.length - 1; i++) {
+//       if (pivot > array[i]) {
+//         leftArr.push(array[i]);
+//       } else if (pivot < array[i] || pivot == array[i]) {
+//         rightArr.push(array[i]);
+//       }
+//     }
 
-    console.log(`left: ${leftArr}, pivot: ${pivot}, right: ${rightArr}`);
-    newArr = QuickSort(leftArr).concat(pivot, QuickSort(rightArr));
-  }
-  return newArr;
-}
+//     console.log(`left: ${leftArr}, pivot: ${pivot}, right: ${rightArr}`);
+//     newArr = QuickSort(leftArr).concat(pivot, QuickSort(rightArr));
+//   }
+//   return newArr;
+// }
 
-console.log(QuickSort([3, 5, 1, 6, 8, 4, 0]));
+// console.log(QuickSort([3, 5, 1, 6, 8, 4, 0]));
 
 // Quick Sort ---- in place
+// function qs(arr, l, r) {
+//   // qs는 자식 함수를 품고있는 부모함수로서, base case설정, 자식이 도출한 pivot값을 이용해 재구간설정하여 recurse하는 역할을함.
+//   let p;
+//   if (l >= r) {
+//     return [];
+//   } else if (l < r) {
+//     p = partition(arr, l, r);
+//   }
+
+//   return [...qs(arr, l, p - 1), p, ...qs(arr, p + 1, r)];
+// }
+
+// function partition(arr, l, r) {
+//   //파티션 작업 대상이 되는 부분어레이
+//   let i = l - 1;
+//   let pivotValue = arr[r];
+//   let j = 0;
+//   while (j < r) {
+//     if (arr[j] < pivotValue) {
+//       i++;
+//       [arr[i], arr[j]] = [arr[j], arr[i]];
+//       j++;
+//     } else {
+//       j++;
+//     }
+//   }
+//   [arr[i + 1], arr[j + 1]] = [arr[j + 1], arr[i + 1]]; // make pivot between the left and right
+//   return i + 1; //Pivot의 index값을 뽑아내는 일. '요 위치에 있따'
+// }
+
+// console.log(qs([3, 5, 1, 6, 8, 4, 0], 0, 7));
+
+// 여기에 Quick Sort 를 in-place 방법으로 구현하기
+
+// let array = [3, 5, 1, 6, 8, 4, 0];
+// console.log(quickSort([3, 5, 1, 6, 8, 4, 0], 0, 6));
