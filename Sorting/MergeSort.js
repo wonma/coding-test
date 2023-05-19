@@ -1,22 +1,45 @@
 // Merge Sort
 
-function mergeSort(array) {
-  // Divide 기능을 주로 하지만, 리턴하는 것은 merge한것이다.
+// mergeSort_1, mergeSort_2는 내가 연습한 것
+// mergeSort_3은 im-developer.tistory.com/134 님의 방식으로 다시해본것
 
-  //1. base case를 설정한다. 최소값만 남는다면 그것을 리턴. 마지막 회기에서는 이 라인에서 끝난다.
-  if (array.length < 2) return array; // 2개이상이라면 계속 진행.
+function mergeSort_3() {
 
-  // 쪼개기 프로토콜 시작
-  //2-1. 반으로 나누는 지점을 도출한다.
-  let mid = Math.floor(array.length / 2);
+}
 
-  //2-2. 반으로 나눈다.
+function mergeSort_2(array) {
+  if(array.length < 2) return array;
+
+  let mid = Math.floor(array.length/2);
   let left = array.splice(0, mid);
 
-  //2-3. recursive call을 쪼개진 각 어레이에 적용한다.
+  return combine(mergeSort_2(left), mergeSort_2(array));
+  
+  function combine(leftArr, rightArr) {
+    let combinedArr = [];
+    
+    while (leftArr.length > 0 && rightArr.length > 0) {
+      if(leftArr[0] <= rightArr[0]) {
+        combinedArr.push(leftArr.shift())
+      } else {
+        combinedArr.push(rightArr.shift())
+      }
+    }
+    return [...combinedArr, ...leftArr, ...rightArr]
+  }
 
-  //3. 쪼개진걸 다시 merge하는 작업이 recursively 수행된다. (한개 요소만 갖고있는 어레이 둘을 합하는 것으로 시작.)
-  return merge(mergeSort(left), mergeSort(array));
+}
+
+function mergeSort_1(array) {
+
+  //base case를 설정한다. 최소값만 남는다면 그것을 리턴. 마지막 회기에서는 이 라인에서 끝난다.
+  if (array.length < 2) return array;
+
+  let mid = Math.floor(array.length / 2);
+  let left = array.splice(0, mid);
+
+  //한개 요소만 갖고있는 어레이 둘을 합하는 것으로 시작.
+  return merge(mergeSort_1(left), mergeSort_1(array));
 
   function merge(left, right) {
     let arr = [];
@@ -29,6 +52,11 @@ function mergeSort(array) {
   }
 }
 
-console.time('merge');
-console.log(mergeSort([7, 2, 10, 3, 6, 1])); // 0.294ms
-console.timeEnd('merge');
+// console.time('mergeSort_1');
+// console.log(mergeSort_1([7, 2, 10, 3, 6, 1])); // 0.294ms
+// console.timeEnd('mergeSort_1');
+
+
+console.time('mergeSort_2');
+console.log(mergeSort_2([7, 2, 10, 3, 6, 1])); // 0.294ms
+console.timeEnd('mergeSort_2');
