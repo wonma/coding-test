@@ -1,4 +1,4 @@
-// ---------------- My Own Solution ----------------- //
+// ---------------- My Own Solution 01 ----------------- //
 // 09/22/2023
 
 function whatIsInAName(collection, source) {
@@ -19,6 +19,9 @@ function whatIsInAName(collection, source) {
     }
     return newArr;
   }
+
+
+// ---------------- Example Solution 01 ----------------- //
 
 
 
