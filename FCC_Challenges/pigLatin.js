@@ -6,13 +6,12 @@ function translatePigLatin(str) {
     let strArr = str.match(/^[^aeiou]+/);
 
     if(!strArr) {
-        return [ ...str, 'way'].join('')
+        return str + 'way'
     } else {
         let newStr = str.replace(strArr[0], '');
         console.log(newStr)
-        return [ ...newStr, ...strArr[0], 'ay'].join('')
+        return newStr + strArr[0] + 'ay';
     }
-
 }
 
-console.log(translatePigLatin("algorithm"))
+console.log(translatePigLatin("sssalgorithm"))
