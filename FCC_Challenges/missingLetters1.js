@@ -1,3 +1,6 @@
+// First trial for solving the problem
+// before learning '.charCodeAt(index)'
+
 // Helper functions
 function createAtoZ() {
   let alphabetsArr = Array.from(Array(26).keys());
