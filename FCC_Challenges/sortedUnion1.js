@@ -1,9 +1,12 @@
+// First trial for solving the problem
+// before seeing the hints of using 'arguments, filter(), new Set(), and flat()'.
+
 function uniteUnique(...arr) {
     let unitedArr = []
     arr.forEach(innerArr => {
         unitedArr = unitedArr.concat(innerArr);
     })
-    let initial = []
+    let initial = [] 
     let result = unitedArr.reduce((acc, item)=>{
         if(!acc.includes(item)) {
             return acc.concat(item);
