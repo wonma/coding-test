@@ -1,10 +1,16 @@
+// My Solution
+// function truthCheck(collection, pre) {
+//   for (let i = 0; i < collection.length; i++) {
+//     if (!collection[i][pre]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
+
+// Another Solution using 'every()'
 function truthCheck(collection, pre) {
-  for (let i = 0; i < collection.length; i++) {
-    if (!collection[i][pre]) {
-      return false;
-    }
-  }
-  return true;
+  return collection.every(obj => obj[pre]);
 }
 
 truthCheck(
