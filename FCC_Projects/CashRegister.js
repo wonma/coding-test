@@ -3,11 +3,11 @@ let currencyUnit = {
     "NICKEL": 0.05,
     "DIME": 0.1,
     "QUARTER": 0.25,
-    "DOLLAR": 1,
+    "ONE": 1,
     "FIVE": 5,
     "TEN": 10,
     "TWENTY": 20,
-    "One HUNDRED": 100
+    "ONE HUNDRED": 100
   }
 
 function checkCashRegister(price, cash, cid) {
@@ -29,57 +29,49 @@ function checkCashRegister(price, cash, cid) {
         let base = currencyUnit[cid[i][0]]; // base amount e.g.) 0.25
 
         // If the change to give is more than or equal to the base amount of this unit, we can try to get the maximum of this unit.
-        if(base <= currentChange) {
+        if(base <= currentChange && whatIHave > 0) {
+          let n = 1;
 
-        // If we have something in this unit, we can get the maximum of this unit and derive the change left for the next unit.
-         if(whatIHave > 0){
+          while(base * n <= whatIHave && base * n <= currentChange) {
+              // If maximum amount is exactly what I have, we don't need to increase 'n'.
+              if(base * n == whatIHave || base * n == currentChange) {
+                  break;
+              }
+              // If maximum amount is less than what I have, increase 'n' to continue the next possible maxium amount.
+              n++;
+          }
 
-            let n = 1;
-            let maxOfUnit = base * n;
+          // If maximum amount is larger than what I have, it means the increased 'n' needs to be decreased back.
+          if(base * n > whatIHave || base * n > currentChange) {
+              n--;
+          }            
 
-            while(maxOfUnit <= whatIHave) {
-                // If maximum amount is exactly what I have, we don't need to increase 'n'.
-                if(maxOfUnit == whatIHave) {
-                    break;
-                }
-                // If maximum amount is less than what I have, increase 'n' to continue the next possible maxium amount.
-                n++;
-            }
-            // If maximum amount is larger than what I have, it means the increased 'n' needs to be decreased back.
-            if(maxOfUnit > whatIHave) {
-                n--;
-            }            
+          // Update the totalToGive array with amount 'maxOfUnit'
+          totalToGive.push([cid[i][0],  base * n]);
+          // Add the remaining cash of this unit to the variable 'rid'.
+          rid = rid + (cid[i][1] - base * n)
 
-            // Update the totalToGive array with amount 'maxOfUnit'
-            totalToGive.unshift([cid[i][0]],  maxOfUnit);
-            // Add the remaining cash of this unit to the variable 'rid'.
-            rid += cid[i][1] - maxOfUnit
-
-            // Update the currentChange and continue 'for loop' with the next unit.
-            currentChange = currentChange -  maxOfUnit;
-          }       
+          // Update the currentChange and continue 'for loop' with the next unit.
+          currentChange = (currentChange -  base * n).toFixed(2);    
+          console.log(cid[i][0], currentChange)
         } else if(base > currentChange) {
          // Add the remaining cash in drawer to the variable 'rid'.
-         rid = cid[i][1];
+         rid = rid + cid[i][1];
         }
 
       }// End of for loop
 
       // If there's nothing in 'rid', it means it's time to close. 
-      if(rid == 0) {
+      if(currentChange == 0 && rid == 0) {
         result.status = "CLOSED";
         result.change = [ ...cid ];
-      }
-
-      if(currentChange == 0 && rid > 0) {
+      } else if(currentChange == 0 && rid > 0) {
         result.status = "OPEN";
-        result.change = [ ...totalToGive];
-      }
-      console.log(totalToGive)
-
+        result.change = totalToGive;
+      } 
       return result;
     }
     
-    const answer = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+    const answer = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
 
     console.log(answer)
